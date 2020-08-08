@@ -6,21 +6,11 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
-import io.github.bonigarcia.wdm.WebDriverManager;
-import org.openqa.selenium.Platform;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.chrome.ChromeOptions;
-import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.remote.BrowserType;
-import org.openqa.selenium.remote.DesiredCapabilities;
-import org.openqa.selenium.remote.RemoteWebDriver;
+
 
 public class Driver {
     private static final Logger logger = Logger.getLogger(Driver.class);
-    //same for everyone
     private static final ThreadLocal<WebDriver> driverPool = new ThreadLocal<>();
-
     //so no one can create object of Driver class
     //everyone should call static getter method instead
     private Driver() {
@@ -35,7 +25,6 @@ public class Driver {
      * @return
      */
     public synchronized static WebDriver getDriver() {
-        String GRID_URL = "http://3.235.145.39:4444/wd/hub";
         //if webdriver object doesn't exist
         //create it
         if (driverPool.get() == null) {
@@ -46,9 +35,6 @@ public class Driver {
                 browser = System.getProperty("browser");
             }
 
-            if (System.getProperty("grid_url") != null) {
-                GRID_URL = System.getProperty("grid_url");
-            }
             logger.info("Browser :: " + browser);
             switch (browser) {
                 case "chrome":

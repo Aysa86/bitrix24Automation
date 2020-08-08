@@ -9,17 +9,33 @@ import org.openqa.selenium.support.FindBy;
 public class LoginPage extends BasePage{
     private final static Logger logger = Logger.getLogger(LoginPage.class);
 
-    @FindBy(name = "User_Login")
+    @FindBy(name = "USER_LOGIN")
     private WebElement email;
 
-    @FindBy(name = "User_password")
+    @FindBy(name = "USER_PASSWORD")
     private WebElement password;
 
-    public void login(){
-     String userNameString = ConfigurationReader.getProperty("username");
-     String passwordString = ConfigurationReader.getProperty("password");
-     email.sendKeys(userNameString);
-     password.sendKeys(passwordString, Keys.ENTER);
-     logger.info("Login with "+userNameString+" username and "+passwordString+" password");
+    public void login() {
+        String usernameString = ConfigurationReader.getProperty("username");
+        String passwordString = ConfigurationReader.getProperty("password");
+        email.sendKeys(usernameString);
+        password.sendKeys(passwordString, Keys.ENTER);
+        logger.info("Login with " + usernameString + " username and " + passwordString + " password");
+    }
+
+    /**
+     * This method used for login under specific role
+     *
+     * @param role like hr, helpdesk, marketing
+     */
+    public void login(String role) {
+        role = role.toLowerCase();
+        //email.hr=hr43@cybertekschool.com
+        String usernameString = ConfigurationReader.getProperty("email." + role);
+        String passwordString = ConfigurationReader.getProperty("password");
+        email.sendKeys(usernameString);
+        password.sendKeys(passwordString, Keys.ENTER);
+        logger.info("Logins as " + role);
+
     }
 }
